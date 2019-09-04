@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>one</title>
+    <script src="../js/vue.js"></script>
+</head>
+<body>
+    <div id="app">
+        <span>{{content}}</span>
+        <hr/>
+        <span v-bind:title="message">
+            鼠标悬停几秒钟查看此处动态绑定的提示信息！
+        </span>
+        <hr/>
+        <p v-if="seen">you saw me</p>
+        <hr/>
+        <input type="text" v-model="msg"/><button type="button" v-on:click="submit">提交</button>
+        <span>{{msg}}</span>
+        <ol>
+            <li v-for="todo in todos">
+                <span>{{todo}}</span>
+            </li>
+        </ol>
+        <hr/>
+        <div>
+            <ol>
+                <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+            </ol>
+        </div>
+    </div>
+    <script type="text/javascript">
+        Vue.component('todo-item', {
+            props: ['todo'],
+            template: '<li>{{ todo.text }}</li>'
+        })
+
+        var app = new Vue({
+            el: '#app',
+            data: {
+                content: 'hello world !',
+                message: '页面加载于 ' + new Date().toLocaleString(),
+                seen: true,
+                todos: [
+                    '学习 JavaScript',
+                    '学习 Vue',
+                    '整个牛项目'
+                ],
+                groceryList: [
+                    { id: 0, text: '蔬菜' },
+                    { id: 1, text: '奶酪' },
+                    { id: 2, text: '随便其它什么人吃的东西' }
+                ],
+                msg: "hello"
+            },
+            methods:{
+                submit: function () {
+                    this.todos.push(this.msg);
+                    this.msg = '';
+                }
+            }
+        });
+
+    </script>
+</body>
+</html>
